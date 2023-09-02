@@ -1,6 +1,7 @@
 package com.example.hwswaggeruiind8.service;
 
 import com.example.hwswaggeruiind8.entity.Faculty;
+import com.example.hwswaggeruiind8.entity.Student;
 import com.example.hwswaggeruiind8.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,11 @@ import java.util.stream.Collectors;
 public class FacultyService {
 
     private final FacultyRepository facultyRepository;
+    private final StudentService studentService;
 
-    public FacultyService(FacultyRepository facultyRepository) {
+    public FacultyService(FacultyRepository facultyRepository, StudentService studentService) {
         this.facultyRepository = facultyRepository;
+        this.studentService = studentService;
     }
 
     public Faculty add(String name, String color) {
@@ -46,5 +49,9 @@ public class FacultyService {
 
     public List<Faculty> getByColorOrName(String param) {
         return facultyRepository.findByColorContainsIgnoreCaseOrNameContainsIgnoreCase(param, param);
+    }
+
+    public List<Student> getStudents(Long id) {
+        return studentService.findByFacultyId(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hwswaggeruiind8.controller;
 
+import com.example.hwswaggeruiind8.entity.Faculty;
 import com.example.hwswaggeruiind8.entity.Student;
 import com.example.hwswaggeruiind8.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,10 @@ public class StudentController {
     @GetMapping("/by-age-between")
     public List<Student> getByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return studentService.findByAgeBetween(min, max);
+    }
+
+    @GetMapping("/faculty-by-id")
+    public Faculty getFaculty(@RequestParam long id) {
+        return studentService.getFaculty(id);
     }
 }
