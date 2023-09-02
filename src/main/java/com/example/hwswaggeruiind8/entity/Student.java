@@ -1,15 +1,25 @@
-package com.example.hwswaggeruiind8.model;
+package com.example.hwswaggeruiind8.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
 public class Student {
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String name;
     private int age;
 
-    public Student(Long id, String name, int age) {
-        this.id = id;
+    public Student() {
+    }
+
+    public Student(String name, int age) {
         this.name = name;
         this.age = age;
     }
