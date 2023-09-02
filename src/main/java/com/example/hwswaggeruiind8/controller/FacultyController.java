@@ -40,4 +40,9 @@ public class FacultyController {
     public List<Faculty> getByColor(@RequestParam String color) {
         return facultyService.getByColor(color);
     }
+
+    @GetMapping("/by-color-or-name")
+    public List<Faculty> getByColorOrName(@RequestParam String param) {
+        return facultyService.getByColorOrName(param);
+    }
 }
