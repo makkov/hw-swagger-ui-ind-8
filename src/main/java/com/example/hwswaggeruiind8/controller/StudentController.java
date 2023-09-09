@@ -1,10 +1,23 @@
 package com.example.hwswaggeruiind8.controller;
 
+import com.example.hwswaggeruiind8.entity.Avatar;
 import com.example.hwswaggeruiind8.entity.Faculty;
 import com.example.hwswaggeruiind8.entity.Student;
+import com.example.hwswaggeruiind8.service.AvatarService;
 import com.example.hwswaggeruiind8.service.StudentService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -12,9 +25,11 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, AvatarService avatarService) {
         this.studentService = studentService;
+        this.avatarService = avatarService;
     }
 
     @PostMapping
