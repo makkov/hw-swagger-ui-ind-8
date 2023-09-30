@@ -4,6 +4,8 @@ import com.example.hwswaggeruiind8.entity.Avatar;
 import com.example.hwswaggeruiind8.entity.Student;
 import com.example.hwswaggeruiind8.repository.AvatarRepository;
 import com.example.hwswaggeruiind8.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,8 @@ public class AvatarService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     public AvatarService(
             @Value("${path.to.avatars.folder}") String avatarsDir,
             StudentRepository studentRepository,
@@ -32,6 +36,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long facultyId, MultipartFile avatarFile) throws IOException {
+        logger.info("Был вызван метод uploadAvatar");
         Student student = studentRepository.findById(facultyId).get();
         // строчка ниже работает для MacOs. заменить для Windows: Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Path filePath = Path.of(new File("").getAbsolutePath() + avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
@@ -55,10 +60,12 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(long id) {
+        logger.info("Был вызван метод findAvatar");
         return avatarRepository.findById(id).get();
     }
 
     private String getExtensions(String fileName) {
+        logger.info("Был вызван метод getExtensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }
