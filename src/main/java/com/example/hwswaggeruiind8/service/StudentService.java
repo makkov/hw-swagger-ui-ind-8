@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -82,4 +84,32 @@ public class StudentService {
                 .average()
                 .orElseThrow(() -> new RuntimeException("Ошибка вычисления среднего возраста"));
     }
+
+    public int calculate() {
+        long start = System.currentTimeMillis();
+        int result = Stream
+                .iterate(1, a -> a +1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, (a, b) -> a + b);
+        long finish = System.currentTimeMillis();
+        logger.info("Calculate time: " + (finish - start));
+        return result;
+    }
+
+    /*
+    без parallel:
+    Calculate time: 65
+    Calculate time: 39
+    Calculate time: 108
+    Calculate time: 58
+
+    c parallel:
+    Calculate time: 335
+    Calculate time: 109
+    Calculate time: 49
+    Calculate time: 153
+    Calculate time: 217
+    Calculate time: 176
+    * */
 }

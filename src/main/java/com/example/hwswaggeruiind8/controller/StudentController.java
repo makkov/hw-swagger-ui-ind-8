@@ -64,4 +64,9 @@ public class StudentController {
     public double avgAge() {
         return studentService.avgAge();
     }
+
+    @GetMapping("/calculate")
+    public int calculate() {
+        return studentService.calculate();
+    }
 }
