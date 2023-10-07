@@ -19,6 +19,8 @@ public class StudentService {
 
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+    private final Object object = new Object();
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -88,7 +90,7 @@ public class StudentService {
     public int calculate() {
         long start = System.currentTimeMillis();
         int result = Stream
-                .iterate(1, a -> a +1)
+                .iterate(1, a -> a + 1)
                 .limit(1_000_000)
                 .parallel()
                 .reduce(0, (a, b) -> a + b);
@@ -112,4 +114,46 @@ public class StudentService {
     Calculate time: 217
     Calculate time: 176
     * */
+
+    public void printStudentsName() {
+        List<Student> students = studentRepository.findAll();
+        printStudentName(students.get(0));
+        printStudentName(students.get(1));
+
+        new Thread(() -> {
+            printStudentName(students.get(2));
+            printStudentName(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudentName(students.get(4));
+            printStudentName(students.get(5));
+        }).start();
+    }
+
+    private void printStudentName(Student student) {
+        System.out.println(Thread.currentThread() + " " + student);
+    }
+
+    public void printStudentsNameSync() {
+        List<Student> students = studentRepository.findAll();
+        printStudentName(students.get(0));
+        printStudentName(students.get(1));
+
+        new Thread(() -> {
+            printStudentName(students.get(2));
+            printStudentName(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudentName(students.get(4));
+            printStudentName(students.get(5));
+        }).start();
+    }
+
+    private void printStudentNameSync(Student student) {
+        synchronized (object) {
+            System.out.println(Thread.currentThread() + " " + student);
+        }
+    }
 }
