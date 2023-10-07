@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,5 +65,21 @@ public class StudentService {
     public List<Student> findByFacultyId(long facultyId) {
         logger.info("Был вызван метод findByFacultyId");
         return studentRepository.findByFacultyId(facultyId);
+    }
+
+    public List<String> findAllStartFromA() {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(name -> name.startsWith("А"))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public double avgAge() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(i -> (double) i.getAge())
+                .average()
+                .orElseThrow(() -> new RuntimeException("Ошибка вычисления среднего возраста"));
     }
 }

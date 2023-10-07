@@ -1,23 +1,11 @@
 package com.example.hwswaggeruiind8.controller;
 
-import com.example.hwswaggeruiind8.entity.Avatar;
 import com.example.hwswaggeruiind8.entity.Faculty;
 import com.example.hwswaggeruiind8.entity.Student;
 import com.example.hwswaggeruiind8.service.AvatarService;
 import com.example.hwswaggeruiind8.service.StudentService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -65,5 +53,15 @@ public class StudentController {
     @GetMapping("/faculty-by-id")
     public Faculty getFaculty(@RequestParam long id) {
         return studentService.getFaculty(id);
+    }
+
+    @GetMapping("/name/start-from-a")
+    public List<String> startFromA() {
+        return studentService.findAllStartFromA();
+    }
+
+    @GetMapping("/avg-age")
+    public double avgAge() {
+        return studentService.avgAge();
     }
 }
