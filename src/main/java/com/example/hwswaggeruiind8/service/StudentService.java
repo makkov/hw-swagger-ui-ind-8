@@ -1,27 +1,28 @@
 package com.example.hwswaggeruiind8.service;
 
+import com.example.hwswaggeruiind8.dto.StudentResponseDto;
 import com.example.hwswaggeruiind8.entity.Faculty;
 import com.example.hwswaggeruiind8.entity.Student;
+import com.example.hwswaggeruiind8.mapper.StudentMapper;
 import com.example.hwswaggeruiind8.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
-    public Student add(String name, int age) {
+    public StudentResponseDto add(String name, int age) {
         Student newStudent = new Student(name, age);
-        return studentRepository.save(newStudent);
+        return studentMapper.studentToStudentResponseDto(newStudent);
     }
 
     public Student get(long id) {

@@ -1,5 +1,7 @@
 package com.example.hwswaggeruiind8.controller;
 
+import com.example.hwswaggeruiind8.dto.StudentDto;
+import com.example.hwswaggeruiind8.dto.StudentResponseDto;
 import com.example.hwswaggeruiind8.entity.Faculty;
 import com.example.hwswaggeruiind8.entity.Student;
 import com.example.hwswaggeruiind8.service.StudentService;
@@ -18,7 +20,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student create(@RequestBody Student student) {
+    public StudentResponseDto create(@RequestBody StudentDto student) {
         return studentService.add(student.getName(), student.getAge());
     }
 
